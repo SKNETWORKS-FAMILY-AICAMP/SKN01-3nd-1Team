@@ -48,7 +48,7 @@
     </tr>
   </tbody>
 </table>
-
+<br><br><br>
 
 
 # 2. Introduction Project (프로젝트 개요)
@@ -88,12 +88,12 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 2. Back-End에서는 **Python**과 **Django**, **MySQL** 등을 이용하여 Request에 대한 정확한 Response와 원활한 웹사이트 운영하는 것을 목표로 삼았습니다.
 3. Fast API에서는 **Machine Learning** **Deep Learning** 이용하여 데이터를 분석 및 예측할 수 있도록 하였습니다.
 4. CI-CD는 지속적인 코드 통합과 지속적인 배포를 통해 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하며, 개발과 운영의 경계를 허물며 신속하게 가치를 제공하는 것을 목표로 삼았습니다. 
-
+<br><br><br>
 
 
 # 3. ERD 구성
 ![image](https://github.com/user-attachments/assets/89c648be-12d6-4a15-8fbb-6d0149eaee81)
-
+<br><br><br>
 
 ## 애자일 보드를 사용하는 이유
 ```c
@@ -107,12 +107,24 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 ```
 
 # 4. Backend 애자일 보드 - 요구 사항 정의서
+![image](https://github.com/user-attachments/assets/ecc39db2-4b69-4609-b5d8-54a1a9464e38)
+![image](https://github.com/user-attachments/assets/f28987d4-0ea5-4485-ae20-c7823bd6907c)
+<br><br><br>
+
+
 # 5. Frontend 애자일 보드 - 화면 설계서
+![image](https://github.com/user-attachments/assets/a4a4841b-52c5-4e46-92e7-d02d0aecf0e0)
+![image](https://github.com/user-attachments/assets/ed4222af-786a-47b3-af49-4e4b1b356087)
+<br><br><br>
+
+
 # 6. FastAPI 애자일 보드 - AI 서빙 설계서
+![image](https://github.com/user-attachments/assets/f0239817-461a-4625-9176-f70bacece673)
+<br><br><br>
 
 # 7. 시스템 구성도
 ![image](https://github.com/user-attachments/assets/66a78240-b41d-487a-8800-29bccbab7d41)
-
+<br><br><br>
 
 
 # 8. Manual Deploy (수동 배포 진행 절차)
@@ -120,6 +132,9 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 ## Frontend (UI)
 ## Backend (Server)
 ## FastAPI (AI Core Server)
+<br><br><br>
+
+
 
 # 9. Autonomous Deploy (자동 배포 진행 절차)
 
@@ -167,7 +182,15 @@ chmod +x find_test.sh
 
 ## FastAPI (AI Core Server)
 
+<br><br><br>
+
+
+
 # 10. Result (수행 결과)
+
+
+
+<br><br><br>
 
 # 11. Tech Stack (기술 스택)
 
@@ -210,7 +233,6 @@ chmod +x find_test.sh
 <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white"/>
 <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/>
 
-
 ### CI-CD Infrastructure
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white)
 <img src="https://img.shields.io/badge/AWS_EC2-FF9900?style=for-the-badge&logo=amazon-ec2&logoColor=white"/>
@@ -220,8 +242,16 @@ chmod +x find_test.sh
 <img src="https://img.shields.io/badge/docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white"/> 
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
 <img src="https://img.shields.io/badge/redis-%23FF4438?style=for-the-badge&logo=redis&logoColor=white"/>
-
+<br><br><br>
 
 # 12. 테스트 보고서 (CI 테스트 결과)
+<br><br><br>
+
+
+
 # 13. Deploy Issue (배포 이슈)
+<br><br><br>
+
+
+
 # 14. 한 줄 회고
