@@ -1,15 +1,14 @@
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF0000,100:FFA500&height=240&text=SKN01-3nd-1Team&animation=&fontColor=ffffff&fontSize=90" width="1000" />
-  <img width="1000" alt="image" src="https://github.com/Jh-jaehyuk/Jh-jaehyuk.github.io/assets/126551524/7ea63fc3-95f0-44d5-a0f0-cf431cae34f1">  
+  <img width="1000" alt="image" src="https://github.com/Jh-jaehyuk/Jh-jaehyuk.github.io/assets/126551524/7ea63fc3-95f0-44d5-a0f0-cf431cae34f1"> 
   
   [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-3nd-1Team&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 </div>
 
 
 
-
 # 1. Introduction Team (팀 소개)
-### TCP(Text Chat Programmers)
+### ✅ 팀명 : TCP(Text Chat Programmers)
 <table align=center>
   <tbody>
     <tr>
@@ -22,7 +21,7 @@
     <tr>
       <td align="center">
         <div>
-          <img src="https://github.com/user-attachments/assets/94636804-7aad-46b0-9f5d-c03268b77885"width="200px; alt=""/>
+          <img src="https://github.com/user-attachments/assets/80f0a998-61ab-4de5-a652-51575e8a4468"width="200px; alt=""/>
         </div>
       </td>
       <td align="center">
@@ -37,7 +36,7 @@
         <img src="https://github.com/user-attachments/assets/77eff59b-1c54-4d91-a49c-5f81cf28fb35"width="200px;" alt=""/>
       </td>
       <td align="center">
-        <img src="https://github.com/user-attachments/assets/80bd401c-ad83-41b8-8502-8fd42d4177db"width="200px;" alt=""/>
+        <img src="https://github.com/user-attachments/assets/49822355-b1ef-485b-a45b-dc2199d8397b"width="200px;" alt=""/>
       </td>
     </tr>
     <tr>
@@ -49,6 +48,7 @@
     </tr>
   </tbody>
 </table>
+
 
 
 # 2. Introduction Project (프로젝트 개요)
@@ -90,7 +90,10 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 4. CI-CD는 지속적인 코드 통합과 지속적인 배포를 통해 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하며, 개발과 운영의 경계를 허물며 신속하게 가치를 제공하는 것을 목표로 삼았습니다. 
 
 
+
 # 3. ERD 구성
+![image](https://github.com/user-attachments/assets/89c648be-12d6-4a15-8fbb-6d0149eaee81)
+
 
 ## 애자일 보드를 사용하는 이유
 ```c
@@ -103,19 +106,22 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 작은 것 같지만 이와 같은 것들이 쌓여서 아주 기민하고 민첩한 조직을 만들어 냅니다.
 ```
 
-# 4. 데이터 수집 방식 (크롤링)
+# 4. Backend 애자일 보드 - 요구 사항 정의서
+# 5. Frontend 애자일 보드 - 화면 설계서
+# 6. FastAPI 애자일 보드 - AI 서빙 설계서
 
-# 5. Streamlit 애플리케이션 사용 방식
+# 7. 시스템 구성도
+![image](https://github.com/user-attachments/assets/66a78240-b41d-487a-8800-29bccbab7d41)
 
-# 6. Manual Deploy (수동 배포 진행 절차)
+
+
+# 8. Manual Deploy (수동 배포 진행 절차)
 
 ## Frontend (UI)
-
 ## Backend (Server)
-
 ## FastAPI (AI Core Server)
 
-# 7. Autonomous Deploy (자동 배포 진행 절차)
+# 9. Autonomous Deploy (자동 배포 진행 절차)
 
 ## Frontend (UI)
 
@@ -161,9 +167,9 @@ chmod +x find_test.sh
 
 ## FastAPI (AI Core Server)
 
-# 8. Result (수행 결과)
+# 10. Result (수행 결과)
 
-# 9. Tech Stack (기술 스택)
+# 11. Tech Stack (기술 스택)
 
 ### Co-Work(Communication)
 ![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)
@@ -173,13 +179,13 @@ chmod +x find_test.sh
 <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"/>
 
 ### IDE
-![Streamlit](https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![PyCharm](https://img.shields.io/badge/pycharm-%23000000?style=for-the-badge&logo=pycharm&logoColor=white")
 <img src="https://img.shields.io/badge/Jupyter_Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white"/>
 <img src="https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white"/> 
-<img src="https://img.shields.io/badge/pycharm-%23000000?style=for-the-badge&logo=pycharm&logoColor=white"/>
+
 
 ### Frontend
-![Streamlit](https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
 <img src="https://img.shields.io/badge/Javascript-ffb13b?style=for-the-badge&logo=javascript&logoColor=white"/>
 <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white"/> 
@@ -216,10 +222,6 @@ chmod +x find_test.sh
 <img src="https://img.shields.io/badge/redis-%23FF4438?style=for-the-badge&logo=redis&logoColor=white"/>
 
 
-# 10. 테스트 보고서 (CI 테스트 결과)
-
-# 11. Agile Board (애자일 보드)
-
-# 12. Deploy Issue (배포 이슈)
-
-# 13. 한 줄 회고
+# 12. 테스트 보고서 (CI 테스트 결과)
+# 13. Deploy Issue (배포 이슈)
+# 14. 한 줄 회고
