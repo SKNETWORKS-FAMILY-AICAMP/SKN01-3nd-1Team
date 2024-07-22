@@ -90,7 +90,13 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 4. CI-CD는 지속적인 코드 통합과 지속적인 배포를 통해 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하며, 개발과 운영의 경계를 허물며 신속하게 가치를 제공하는 것을 목표로 삼았습니다. 
 
 
-# 3. Manual Deploy (수동 배포 진행 절차)
+# 3. ERD 구성
+
+# 4. 데이터 수집 방식 (크롤링)
+
+# 5. Streamlit 애플리케이션 사용 방식
+
+# 6. Manual Deploy (수동 배포 진행 절차)
 
 ## Frontend (UI)
 
@@ -98,7 +104,7 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 
 ## FastAPI (AI Core Server)
 
-# 4. Autonomous Deploy (자동 배포 진행 절차)
+# 7. Autonomous Deploy (자동 배포 진행 절차)
 
 ## Frontend (UI)
 
@@ -106,9 +112,9 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 
 ## FastAPI (AI Core Server)
 
-# 5. Result (수행 결과)
+# 8. Result (수행 결과)
 
-# 6. Tech Stack (기술 스택)
+# 9. Tech Stack (기술 스택)
 ### Backend
 <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white"/> ![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white) <img src="https://img.shields.io/badge/pandas-%23150458?style=for-the-badge&logo=pandas&logoColor=white"/> <img src="https://img.shields.io/badge/numpy-%23013243?style=for-the-badge&logo=numpy&logoColor=white"/>
 
@@ -146,8 +152,10 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 <img src="https://img.shields.io/badge/docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/redis-%23FF4438?style=for-the-badge&logo=redis&logoColor=white"/> ![MySQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white) ![Graphviz](https://img.shields.io/badge/Graphviz-used-blue.svg)
 
 
-# 7. Agile Board (애자일 보드)
+# 10. 테스트 보고서 (CI 테스트 결과)
 
-# 8. Deploy Issue (배포 이슈)
+# 11. Agile Board (애자일 보드)
 
-# 9. 한 줄 회고
+# 12. Deploy Issue (배포 이슈)
+
+# 13. 한 줄 회고
