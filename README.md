@@ -166,7 +166,7 @@ docker-compose up
 외부에서 API 테스트를 위해 아래와 같이 인바운드 규칙을 설정합니다.
 ![image](https://github.com/user-attachments/assets/0021b74a-e8d0-44c0-b8a3-146e9c7ca8b6)
 
-아래와 같이 수동배포가 잘 된 것을 확인할 수 있습니다.
+아래와 같이 수동배포가 잘 된 것을 확인할 수 있습니다.  
 ![image](https://github.com/user-attachments/assets/b3e2ffcd-6f5c-41f0-873b-9ae29c516d32)
 <br><br><br>
 
@@ -420,7 +420,6 @@ FLUSH PRIVILEGES;
 <img src="https://img.shields.io/badge/axios-%235A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
 
 ### Backend
-![Streamlit](https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white)
 <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> 
 <img src="https://img.shields.io/badge/pandas-%23150458?style=for-the-badge&logo=pandas&logoColor=white"/> 
 <img src="https://img.shields.io/badge/numpy-%23013243?style=for-the-badge&logo=numpy&logoColor=white"/>
@@ -434,7 +433,6 @@ FLUSH PRIVILEGES;
 <img src="https://img.shields.io/badge/Deep_Learning-00599C?style=for-the-badge&logo=deep-learning&logoColor=white"/>
 <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white"/>
 <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white"/>
-<img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/>
 
 ### CI-CD Infrastructure
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white)
@@ -448,15 +446,124 @@ FLUSH PRIVILEGES;
 <br><br><br>
 
 # 12. 테스트 보고서 (CI 테스트 결과)
-<br><br><br>
-
-
+🧪 **Backend Build Test**  
+<img width="976" alt="Backend-Build-Test" src="https://github.com/user-attachments/assets/b7ad4ba0-f070-477a-b1f6-39460f94837c">  
+<br>
+🧪 **Frontend Build Test**  
+<img width="993" alt="Frontend-Build-Test" src="https://github.com/user-attachments/assets/449cff0e-1953-4a93-aa0f-3ea8e07291d9">  
+<br>  
+🆗 _Backend_ 와 _Frontend_ 모두 성공적으로 **Build** 되는 것을 확인할 수 있습니다.
 
 # 13. Deploy Issue (배포 이슈)
-<br><br><br>
+1. **Error: repository name must be lowercase**
+![Issue1](https://github.com/user-attachments/assets/0eaa074a-c88e-469b-8ab2-e90919ad1c88)  
+<br>
 
+### _Solution_   
+만약 actor가 Uppercase라면, 아래와 같이 직접 Lowercase를 명시하여 문제를 해결할 수 있습니다.
 
+```yaml
+name: Django CD (Continuous Deploy)
 
+on:
+  repository_dispatch:
+    types: [BACKEND_TEST_FINISH_TRIGGER]
+
+jobs:
+  build:
+    name: build-app
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+```
+  
+위의 내용을 아래와 같이 수정합니다.  
+```yaml
+name: Django CD (Continuous Deploy)
+
+on:
+  repository_dispatch:
+    types: [BACKEND_TEST_FINISH_TRIGGER]
+    
+env:
+  DOCKER_IMAGE: ghcr.io/${{ secrets.REAL_ACTOR }}/tcp-backend
+
+jobs:
+  build:
+    name: build-app
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+```
+
+그리고 아래 내용을 수정합니다.  
+```yaml
+- name: Build and Push Docker Image
+  run: |
+    cd tcp_backend/tcp_django
+    docker buildx build --platform linux/arm64 -f Dockerfile -t ghcr.io/${{ github.actor }}/tcp-django-backend-server:latest --push .
+```
+  
+위의 내용을 아래와 같이 수정합니다.
+```yaml
+- name: Build and Push Docker Image
+  run: |
+    cd tcp_backend/tcp_django
+    docker buildx build --platform linux/arm64 -f Dockerfile -t ${{ env.DOCKER_IMAGE }}:latest --push .
+```
+
+**secrets**에 _REAL_ACTOR_ 를 설정하고 _REAL_ACTOR_ 를 **소문자 본인 계정**으로 작성하면 됩니다.  
+ex) Ah-ram >> ah-ram  
+
+마지막으로 아래 내용을 수정합니다.  
+```yaml
+deploy:
+  needs: build
+  name: Deploy
+  runs-on: [ self-hosted, deploy-tcp-backend ]
+  steps:
+  - name: Login to GHCR
+    uses: docker/login-action@v1
+    with:
+      registry: ghcr.io
+      username: ${{ github.actor }}
+      password: ${{ secrets.GHCR_TOKEN }}
+```
+
+위의 내용을 아래와 같이 수정합니다.  
+```yaml
+deploy:
+  needs: build
+  name: Deploy
+  runs-on: [ self-hosted, deploy-lms-backend ]
+  steps:
+  - name: Login to GHCR
+    uses: docker/login-action@v1
+    with:
+      registry: ghcr.io
+      username: ${{ secrets.REAL_ACTOR }}
+      password: ${{ secrets.GHCR_TOKEN }}
+```
+
+2. **Cannot connect to the Docker daemon at <workdir>**
+![Issue2](https://github.com/user-attachments/assets/775cadb2-3228-425a-bf98-9ebf4aed8d43)  
+<br>
+
+### _Solution_  
+local에 **docker desktop이 켜져있는지 확인**해보아야 합니다.  
+Docker desktop을 실행하고 다시 시도하니 해결되었습니다.  
+
+3. **FastAPI 배포 이후, 웹에 접속이 되지 않습니다.**
+<img width="722" alt="Issue3" src="https://github.com/user-attachments/assets/89331de6-8e8b-42d8-bf7b-e15364e2260d">
+<br>
+
+### _Solution_  
+FastAPI 배포 후, **인스턴스 보안 그룹에서 33333 port에 대하여 인바운드 설정**을 해주어야 합니다.  
+설정하고 다시 접속하면 정상적으로 처리되는 것을 확인할 수 있습니다.  
+![Issue3-1](https://github.com/user-attachments/assets/0a4d7844-692f-43e2-98fb-76680f98e5a1)  
+  
 # 14. 한 줄 회고
 🤓<b>한재혁</b>  
 _AWS와 Docker에 대해서 배우고 싶었는데, 단순히 배우는 것에서 그치지 않고 웹 애플리케이션 작성부터 배포까지 경험할 수 있어서 정말 좋은 경험이었습니다! 팀원분들도 같이 열심히 해주셔서 어렵지 않게 마무리 할 수 있었습니다. 다들 고생하셨습니다!!👏_  
