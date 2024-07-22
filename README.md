@@ -133,6 +133,41 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 ## Frontend (UI)
 ## Backend (Server)
 ## FastAPI (AI Core Server)
+### Build
+프로젝트 최상단에 Dockerfile과 docker-compose.yml 파일을 구성합니다.
+![image](https://github.com/user-attachments/assets/558dd449-5a52-4b51-9d33-533a89bb34b6)
+
+이후 GHCR에 docker login을 하여 docker build 구성을 진행합니다.
+```bash
+export DOCKER_BUILDKIT=1
+docker buildx create --use
+docker buildx build --platform linux/arm64 --file ./Dockerfile --push -t ghcr.io/github계정/tcp-fastapi-server:latest .
+```
+build가 완료되어 아래와 같은 결과를 확인할 수 있습니다.
+![image](https://github.com/user-attachments/assets/400b0701-5179-4627-becd-e95807ca1bdf)
+
+![image](https://github.com/user-attachments/assets/673e79ee-ccc8-4b41-a64d-8d714fc605a2)
+
+### 구동
+AWS에 접속해서 마찬가지로 docker-compose.yml 파일을 구성합니다.
+
+![image](https://github.com/user-attachments/assets/649539a5-7d58-44e7-9a74-76b458d39a13)
+
+<br>
+컨테이너를 생성하고 구동합니다.
+
+```bash
+docker-compose up
+```
+
+잘 구동된 모습입니다.
+![image](https://github.com/user-attachments/assets/7ab8fd20-fda1-498e-b28b-d8dc4ece6cb1)
+
+외부에서 API 테스트를 위해 아래와 같이 인바운드 규칙을 설정합니다.
+![image](https://github.com/user-attachments/assets/0021b74a-e8d0-44c0-b8a3-146e9c7ca8b6)
+
+아래와 같이 수동배포가 잘 된 것을 확인할 수 있습니다.
+![image](https://github.com/user-attachments/assets/b3e2ffcd-6f5c-41f0-873b-9ae29c516d32)
 <br><br><br>
 
 
