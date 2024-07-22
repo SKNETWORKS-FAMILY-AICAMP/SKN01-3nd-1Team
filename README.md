@@ -73,6 +73,7 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 # 5. Result (수행 결과)
 
 # 6. Tech Stack (기술 스택)
+
 ### Backend
 <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white"/> ![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white) <img src="https://img.shields.io/badge/pandas-%23150458?style=for-the-badge&logo=pandas&logoColor=white"/> <img src="https://img.shields.io/badge/numpy-%23013243?style=for-the-badge&logo=numpy&logoColor=white"/>
 
@@ -91,8 +92,10 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 ### Infrastructure
 <img src="https://img.shields.io/badge/docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/redis-%23FF4438?style=for-the-badge&logo=redis&logoColor=white"/> ![MySQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white) ![Graphviz](https://img.shields.io/badge/Graphviz-used-blue.svg)
 
+
 # 7. Agile Board (애자일 보드)
 
 # 8. Deploy Issue (배포 이슈)
 
 # 9. 한 줄 회고
+
