@@ -3,16 +3,52 @@
   <img width="850" alt="image" src="https://github.com/Jh-jaehyuk/Jh-jaehyuk.github.io/assets/126551524/7ea63fc3-95f0-44d5-a0f0-cf431cae34f1">
   
   [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-2nd-5Team&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+  [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-3nd-1Team&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 </div>
 
 
 
 # 1. Introduction Team (팀 소개)
 ### TCP(Text Chat Programmers)
-| 한재혁 | 민경원 | 정아람 | 최인헌 | 이용휘 |
-|:----------:|:----------:|:----------:|:----------:|:----------:|
-| <img width="120px" src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-1st-5Team/assets/168423037/41e20818-5f78-4a66-a11e-cc81e1abe511" /> | <img width="120px" src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-1st-5Team/assets/168423037/9d1b48c8-50f0-4cfc-90d4-57be71b3c884" /> | <img width="120px" src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-1st-5Team/assets/168423037/7c28355a-889b-4e3a-8423-c799d1e44825" /> | <img width="120px" src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-1st-5Team/assets/168423037/e6f3eba6-082b-491a-8f29-9fef49d50cd1" /> | <img width="120px" src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-1st-5Team/assets/168423037/7b02b779-99eb-4f38-9391-93f8275fbbeb" /> 
-|  [@Jh-jaehyuk](https://github.com/Jh-jaehyuk) | [@MinMessi](https://github.com/Meue-L) | [@Ah-ram ](https://github.com/Ah-ram) | [@ih9511](https://github.com/ih9511) |[@y0ng98](https://github.com/y0ng98) |
+<table align=center>
+  <tbody>
+    <tr>
+      <td align=center><b>한재혁</b></td>
+      <td align=center><b>민경원</b></td>
+      <td align=center><b>정아람</b></td>
+      <td align=center><b>최인헌</b></td>
+      <td align=center><b>이용휘</b></td>
+    </tr>
+    <tr>
+      <td align="center">
+        <div>
+          <img src="https://github.com/user-attachments/assets/94636804-7aad-46b0-9f5d-c03268b77885"width="200px; alt=""/>
+        </div>
+      </td>
+      <td align="center">
+        <div>
+          <img src="https://github.com/user-attachments/assets/30f29d8b-bcec-46c7-bce6-e6e4ec414e55"width="200px;" alt=""/>
+        </div>
+      </td>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/c01c579b-7f4f-436b-984a-74a26d2cef44"width="200px;" alt=""/>
+      </td>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/77eff59b-1c54-4d91-a49c-5f81cf28fb35"width="200px;" alt=""/>
+      </td>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/80bd401c-ad83-41b8-8502-8fd42d4177db"width="200px;" alt=""/>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Jh-jaehyuk"><div align=center>@Jh-jaehyuk</div></a></td>
+      <td><a href="https://github.com/MinMessi"><div align=center>@MinMessi</div></a></td>
+      <td><a href="https://github.com/Ah-ram"><div align=center>@Ah-ram</div></a></td>
+      <td><a href="https://github.com/ih9511"><div align=center>@ih9511</div></a></td>
+      <td><a href="https://github.com/y0ng98"><div align=center>@y0ng98</div></a></td>
+    </tr>
+  </tbody>
+</table>
 
 
 # 2. Introduction Project (프로젝트 개요)
@@ -90,6 +126,25 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 
 ### Infrastructure
 <img src="https://img.shields.io/badge/docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/redis-%23FF4438?style=for-the-badge&logo=redis&logoColor=white"/> ![MySQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white) ![Graphviz](https://img.shields.io/badge/Graphviz-used-blue.svg)
+
+### Backend
+<img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white"/> ![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white) <img src="https://img.shields.io/badge/pandas-%23150458?style=for-the-badge&logo=pandas&logoColor=white"/> <img src="https://img.shields.io/badge/numpy-%23013243?style=for-the-badge&logo=numpy&logoColor=white"/>
+
+### Frontend
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"/> <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=black"/> <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white"/> <img src="https://img.shields.io/badge/vuetify-%231867C0?style=for-the-badge&logo=vuetify&logoColor=white"/> <img src="https://img.shields.io/badge/axios-%235A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
+
+### Collaboration
+![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white) <img src="https://img.shields.io/badge/notion-%23000000?style=for-the-badge&logo=notion&logoColor=white"/> <img src="https://img.shields.io/badge/slack-%234A154B?style=for-the-badge&logo=slack&logoColor=white"/>
+
+### IDE
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=vscode&logoColor=white) <img src="https://img.shields.io/badge/pycharm-%23000000?style=for-the-badge&logo=pycharm&logoColor=white"/>
+
+### AI Core
+<img src="https://img.shields.io/badge/fastapi-%23009688?style=for-the-badge&logo=fastapi&logoColor=white"/> <img src="https://img.shields.io/badge/scikitlearn-%23F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white"/>
+
+### Infrastructure
+<img src="https://img.shields.io/badge/docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/redis-%23FF4438?style=for-the-badge&logo=redis&logoColor=white"/> ![MySQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white) ![Graphviz](https://img.shields.io/badge/Graphviz-used-blue.svg)
+
 
 # 7. Agile Board (애자일 보드)
 
