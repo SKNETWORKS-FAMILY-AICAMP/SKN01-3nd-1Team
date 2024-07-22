@@ -109,6 +109,44 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 ## Frontend (UI)
 
 ## Backend (Server)
+### Django CI
+#### Basic Settings
+GitHub Actions를 활용해서 CI를 구성합니다. 브랜치의 경우, develop 브랜치가 아닌, main 브랜치에서 작업을 수행합니다.  
+  
+![image](https://github.com/user-attachments/assets/a537bdde-8ec9-46d7-b37b-7c881087349d)  
+파일 이름의 경우 ci 로 설정하고, 파일의 경우 yaml 형식으로 구성합니다. XML, JSON 등의 형식으로 구성해도 무방하나, 유지 보수의 유연성과 개발 편의성으로 위해 yaml을 선택하였습니다. 저희 프로젝트에서 Backend의 경우, Django를 기반으로 하여 MySQL과 Redis를 활용합니다. 이에 맞게 yaml 파일을 구성합니다.  
+
+#### Django 일괄 테스트 진행
+또한, 매번 integration 이전에 테스트를 하는 과정에서 모든 테스트 파일을 수동으로 돌리는 번거로움을 줄이기 위해서 Djgnao 테스트 패키지를 찾아서 CI에 전달하게끔 구성하였습니다.  
+
+![image](https://github.com/user-attachments/assets/9afb8a59-eaf9-47dc-ba52-de95da84b681)
+  
+해당 위치에 find_test.sh 를 생성하고 다음의 코드를 작성합니다.  
+```bash
+#!/usr/bin/env bash
+
+TEST_DIRS=$(find . -path ./.venv -prune -o -type d -name 'tests' -print)
+
+APP_TESTS=()
+
+for TEST_DIR in $TEST_DIRS; do
+  APP_NAME=$(basename $(dirname $TEST_DIR))
+  TEST_FILES=$(find $TEST_DIR -type f -name 'test*.py')
+
+  if [ -z "$TEST_FILES" ]; then
+    continue
+  fi
+
+  APP_TESTS+=("${APP_NAME}.tests")
+done
+
+echo "${APP_TESTS[@]}"
+```
+다음으로 실행 권한을 부여합니다. 모든 명령어는 기본적으로 Git Bash에서 실행하기 때문에 Linux 명령어를 사용합니다. 이후, 파일을 실행시켜 루트 위치 내의 모든 tests 파일들을 잘 가져오는지 확인합니다.
+```bash
+chmod +x find_test.sh
+./find_test.sh
+```
 
 ## FastAPI (AI Core Server)
 
