@@ -1,5 +1,6 @@
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF0000,100:FFA500&height=240&text=SKN01-3rd-1Team&animation=&fontColor=ffffff&fontSize=90" width="1000" />
+
   <img width="1000" alt="image" src="https://github.com/Jh-jaehyuk/Jh-jaehyuk.github.io/assets/126551524/7ea63fc3-95f0-44d5-a0f0-cf431cae34f1"> 
   
   [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN01-3nd-1Team&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
@@ -149,7 +150,7 @@ GitHub Actions를 활용해서 CI를 구성합니다. 브랜치의 경우, devel
 파일 이름의 경우 ci 로 설정하고, 파일의 경우 yaml 형식으로 구성합니다. XML, JSON 등의 형식으로 구성해도 무방하나, 유지 보수의 유연성과 개발 편의성으로 위해 yaml을 선택하였습니다. 저희 프로젝트에서 Backend의 경우, Django를 기반으로 하여 MySQL과 Redis를 활용합니다. 이에 맞게 yaml 파일을 구성합니다.  
 
 #### Django 일괄 테스트 진행
-또한, 매번 integration 이전에 테스트를 하는 과정에서 모든 테스트 파일을 수동으로 돌리는 번거로움을 줄이기 위해서 Djgnao 테스트 패키지를 찾아서 CI에 전달하게끔 구성하였습니다.  
+또한, 매번 integration 이전에 테스트를 하는 과정에서 모든 테스트 파일을 수동으로 돌리는 번거로움을 줄이기 위해서 Django 테스트 패키지를 찾아서 CI에 전달하게끔 구성하였습니다.  
 
 ![image](https://github.com/user-attachments/assets/9afb8a59-eaf9-47dc-ba52-de95da84b681)
   
@@ -179,6 +180,65 @@ echo "${APP_TESTS[@]}"
 chmod +x find_test.sh
 ./find_test.sh
 ```
+### Django CD
+#### Basic Settings
+CI 구성때와 마찬가지로 GitHub Actions를 이용하여 CD를 구성합니다. 
+![image](https://github.com/user-attachments/assets/89bdb835-5276-419b-b902-ccf3c6023449)
+
+Django 환경을 여러 개 구성해야 할 경우, build 시에 서로 구분이 돼야합니다. 그렇기 때문에, jobs: build: steps: `Build and push Docker image` 쪽을 다음과 같이 구성합니다.  
+```bash
+- name: Build and push Docker image
+  run: |
+    cd <프로젝트 이름>
+    docker buildx build --platform linux/arm64 -f Dockerfile -t ghcr.io/${{ github.actor }}/<빌드하고자 하는 환경 이름>:latest --push .
+```
+#### Github Actions Runner 구성
+GitHub Actions Runner 설정을 위해 Settings로 이동합니다. Settings -> Code and automation -> Actions -> Runners 이동 후 우측 상단에 `New self-hosted runner` 버튼을 클릭합니다.
+
+![image](https://github.com/user-attachments/assets/2bc9e67a-32c8-4985-9006-cfd4ee157bbd)
+우리는 AWS에서 `Linux`를 선택했기 때문에 `Runner image`를 `Linux`로 선택합니다. 전체적인 세팅은 다음과 같습니다.  
+- Runner Image: `Linux`
+- Architecturre: `ARM64`  
+  
+이후 `Git Bash`를 통해 AWS에 접속합니다.
+  
+![image](https://github.com/user-attachments/assets/fec99c35-004b-4d83-8d27-f9d8e0f49630)
+  
+이후 `Django` 프로젝트 폴더로 이동한 다음, 생성된 `runners` 폴더로 들어갑니다. 다음의 명령을 실행하여 `backend-action-runner` 폴더를 생성합니다.
+```bash
+mkdir backend-action-runner
+cd backend-action-runner
+```
+이후 아래쪽에 있는 명령어들을 입력합니다. 입력 시 CD 스크립트의 `deploy` 부분의 구성을 토대로 수정합니다.
+```bash
+deploy:
+  needs: build
+  name: Deploy
+  runs-on: [ self-hosted, <runners 실행할 이름 > ]
+  steps:
+  - name: Login to GHCR
+  ...
+```
+`config` 버튼을 누르면 아래와 같은 화면이 나옵니다.
+
+![image](https://github.com/user-attachments/assets/13393ca6-4878-451f-afbd-5d3278ae2d5f)
+
+정상적으로 구동된다면 쉘 스크립트 파일을 실행합시다.
+```bash
+./run.sh
+```
+이후 background 에서도 실행되도록 설정합니다.
+```bash
+nohup ./run.sh > run.log 2>&1 &
+```
+추가적으로 background에서 잘 작동하는지 확인하려면 다음의 명령을 입력합니다.
+```bash
+ps -ef | grep run.sh
+```
+잘 작동한다면, 다음과 같이 표시됩니다.
+  
+![image](https://github.com/user-attachments/assets/dcb9f5f7-6ea0-4d37-b0c5-a35abccccc1b)
+
 
 ## FastAPI (AI Core Server)
 
