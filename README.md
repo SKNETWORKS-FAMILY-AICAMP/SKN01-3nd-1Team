@@ -239,6 +239,114 @@ ps -ef | grep run.sh
   
 ![image](https://github.com/user-attachments/assets/dcb9f5f7-6ea0-4d37-b0c5-a35abccccc1b)
 
+### docker-compose 구성
+`Git Bash`를 통해 AWS에 접속합니다. 이후 아래와 같이 명령어를 입력합니다.
+```bash
+cd <프로젝트명>
+mkdir django-backend
+cd django-backend
+```
+Django 프로젝트 디렉토리 하위에 .env 파일과 함께 docker-compose.yml 파일을 생성하고 다음의 내용을 기입합니다.
+```bash
+version: '3'
+services:
+  django:
+    container_name: django
+    image: ghcr.io/${GITHUB_ACTOR}/tf-django-server:latest
+    command: /app/wait-for-it.sh db:3306 -t 15 -- sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - KAKAO_LOGIN_URL=${KAKAO_LOGIN_URL}
+      - KAKAO_CLIENT_ID=${KAKAO_CLIENT_ID}
+      - KAKAO_REDIRECT_URI=${KAKAO_REDIRECT_URI}
+      - KAKAO_TOKEN_REQUEST_URI=${KAKAO_TOKEN_REQUEST_URI}
+      - KAKAO_USERINFO_REQUEST_URI=${KAKAO_USERINFO_REQUEST_URI}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./mysql/logs:/var/log/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+  redis_data:
+  app:
+
+networks:
+  app-network:
+    driver: bridge
+```
+이후 django-backend 하위에 `mysql`디렉토리를 만들고 `custom.cnf` 파일을 생성합니다.
+```bash
+mkdir mysql
+cd mysql
+vi custom.cnf
+```
+```bash
+[mysqld]
+character-set-server = utf8mb4
+collation-server = utf8mb4_general_ci
+skip-character-set-client-handshake
+innodb_buffer_pool_size = 16M
+```
+이후 `mysql` 디렉토리 하위에 `logs` 디렉토리를 배치합니다.
+```bash
+mkdir logs
+cd logs
+touch README.md
+```
+그리고 django-backend 디렉토리 하위에 init.sql 파일을 아래와 같이 작성합니다.
+```bash
+CREATE DATABASE IF NOT EXISTS <db 이름>;
+GRANT ALL PRIVILEGES ON <db 이름>.* TO 'eddi'@'%';
+FLUSH PRIVILEGES;
+```
+`Git Bash`에서 `docker-compose up`명령어를 통해 동작하는지 확인합니다. 잘 동작한다면, docker-compose 구성이 잘 마무리 되었습니다.
 
 ## FastAPI (AI Core Server)
 
