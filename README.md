@@ -131,6 +131,35 @@ CI/CD는 궁극적으로 개발 속도를 높이고, 코드 품질을 유지하�
 # 8. Manual Deploy (수동 배포 진행 절차)
 
 ## Frontend (UI)
+### ➡️ Build
+frontend 로컬 저장소에서 .env에 필요한 IP 옵션들을 설정해줍니다.
+
+이후 아래 명령어를 입력하여 build 합니다.
+```bash
+npm run build
+``` 
+![image](https://github.com/user-attachments/assets/8fd293b2-5166-4684-9561-ca88bbffb7b0)
+
+### ➡️ dist
+build를 하고 나면 dist가 생성되는 것을 확인할 수 있습니다.
+![image](https://github.com/user-attachments/assets/cc497e6c-02fa-429e-8595-c6ce082f65f9)
+
+### ➡️ scp 명령어
+```bash
+scp -i "pem키(상대경로 혹은 절대경로)" -r * ec2-user@AWS_IP:/home/ec2-user/프로젝트팀/vue-frontend/html/
+```
+![image](https://github.com/user-attachments/assets/2cd28b2e-2fef-4390-ae4a-643f882969fc)
+
+### ➡️ docker-compose up
+AWS에서 이전에 작성했던 docker-compose.yml을 활용해서 아래와 같이 실행합니다.
+```bash
+docker-compose up -d
+```
+![image](https://github.com/user-attachments/assets/8b7d9020-68a1-4df0-8218-71573666a2af)
+
+잘 실행되면 아래와 같은 화면을 확인할 수 있습니다.
+![image](https://github.com/user-attachments/assets/25c2116f-af0b-4fff-a429-3c78c2b31138)
+
 ## Backend (Server)
 ## FastAPI (AI Core Server)
 ### Build
@@ -175,6 +204,293 @@ docker-compose up
 # 9. Autonomous Deploy (자동 배포 진행 절차)
 
 ## Frontend (UI)
+### ✅ CI / CD 전체 흐름
+1. 개발자들이 각 Domain에 맞춰 Backlog 작업을 진행합니다.
+
+2. 이 때 테스트가 동작하면서 CI (Continuous Integration) 관련 사항을 체크합니다.
+
+3. 당장 큰 문제가 없다면 PR을 승인합니다.
+
+    (2, 3번은 정책에 따라 달라질 수 있습니다)
+
+
+4. CI가 통과되면 CD로 넘어가서 배포가 진행됩니다.
+
+5. 이 때 npm build를 통해 프로젝트가 빌드됩니다.
+
+6. 빌드 이후 빌드 결과로 html, css, javascript, 리소스(이미지 등등)이 나옵니다.
+
+7. 이 정보가 AWS에 scp를 통해 전달됩니다.
+
+8. 전달한 정보를 가지고 nginx를 구동합니다.
+
+9. nginx를 구동할 때 docker-compose.yml 을 참조합니다.
+
+10. nginx는 구동 시 어떤 javascript, html, css를 참조할지 판정합니다.
+
+     이 내용들은 docker-compose에 명시되어 있습니다.
+
+11. 추가적으로 nginx가 어떤 요청에 대해 어떻게 처리할지 configuration 정보는 conf 폴더 하위에 배치됩니다.
+
+12. 즉 docker-compose up -d 명령 이후 nginx에 의해 frontend 코드가 동작합니다.
+
+
+### 📍 CI 구성
+ ### ➡️ ci.yml
+  Github Actions -> workflows 에서 파일을 작성합니다.
+
+``` bash
+name: CI (Continuous Integration)
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Cache dependencies
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install Dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        npm ci --legacy-peer-deps
+
+    - name: Create .env development for CI
+      run: |
+        pwd
+        echo "${{ secrets.ENV_DEVELOPMENT }}" > .env.development
+        cat .env.development
+
+    - name: Real Test
+      run: |
+        npm run test:unit
+
+    - name: send FRONTEND_TEST_FINISH_TRIGGER
+      run: |
+        curl -S -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -H 'Accept: application/vnd.github.v3+json' \
+            -u ${{ secrets.GHCR_TOKEN }} \
+            -d '{"event_type": "FRONTEND_TEST_FINISH_TRIGGER", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+
+```
+이후 Actions를 살펴보면 CI가 진행되는 것을 확인할 수 있습니다.
+
+  ![image](https://github.com/user-attachments/assets/f5b8f8ee-edd2-4360-8484-cb87bb13cea7)
+
+
+## 📍CD 구성하기
+  ### ➡️cd.yml
+  CI와 마찬가지로 조직 저장소에서 Actions를 눌러 workflows를 작성합니다.
+  ```bash
+  name: CD (Continuous Deploy)
+
+on:
+  repository_dispatch:
+    types: [FRONTEND_TEST_FINISH_TRIGGER]
+
+jobs:
+  build:
+    name: build-app
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get Github Actions IP
+      id: ip
+      uses: haythem/public-ip@v1.2
+
+    - name: Configure AWS IAM Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Cache dependencies
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install Dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        npm ci --legacy-peer-deps
+
+    - name: Create .env.production for Continuous Deploy
+      run: |
+        echo "${{ secrets.ENV_PRODUCTION }}" > .env.production
+        cat .env.production
+
+    - name: Build
+      run: |
+        npm run build
+        ls
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.0
+      with:
+        ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+
+    - name: Add Github Actions IP to Security Group
+      run: |
+        aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+    - name: SCP Action
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST_IP }}
+        username: ec2-user
+        key: ${{ secrets.PRIVATE_KEY }}
+        source: "./dist/**"
+        target: "/home/ec2-user/tcp/actions-frontend"
+
+    - name: Remove Github Actions IP From Security Group
+      run: |
+        aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+    - name: SSH Agent Cleanup
+      if: ${{ always() }}
+      uses: webfactory/ssh-agent@v0.5.0
+      with:
+        ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+
+  deploy:
+    name: Deploy to Production
+    needs: build
+    runs-on: [ self-hosted, deploy-tcp-frontend ]
+    steps:
+      - name: Get Github Actions IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+        
+      - name: Configure AWS IAM Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Add Github Actions IP to Security Group
+        run: |
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+    
+      - name: Deploy to Production
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ec2-user
+          key: ${{ secrets.PRIVATE_KEY }}
+          script_stop: true
+          script: |
+            pwd
+            cd /home/ec2-user/tcp/vue-frontend
+            cp -r /home/ec2-user/tcp/actions-frontend/dist/* ./html/
+
+            docker image prune -f
+            docker logout
+
+            docker-compose up -d
+
+      - name: Remove Github Actions IP From Security Group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+  ```
+
+### ➡️ frontend 에서 필요한 환경변수
+- Gitub Settings -> Secrets and variables -> Actions -> Repository secrets
+![image](https://github.com/user-attachments/assets/9c558df6-84c6-42c5-87ad-b56fb67fbc31)
+
+### ➡️ Github Action Runner 연결
+Github Actions Runner를 설정하기 위해 Settings에서 Actions → Runner →  New self-hosted runner를 누릅니다. 
+    
+  구동되는 버전이 ARM64 Linux에 해당하므로 아래와 같이 설정합니다.
+    ![image](https://github.com/user-attachments/assets/b4222f15-aded-4fb6-9c42-8f79083c8a42)
+
+AWS에 접속하면 CD 스크립트가 생성한 팀 프로젝트의 폴더에 진입하여 runner들을 모아놓을 runners 디렉토리를 생성하고 frontend 용 action runner 디렉토리를 설정합니다.
+```bash
+mkdir frontend-action-runner
+cd frontend-action-runner
+```
+이후 Github Actions Runner 설정에서 하단에 있었던 Download, Configure에 해당하는 명령어들을 순서대로 넣어줍니다.
+![image](https://github.com/user-attachments/assets/ce3e6e4f-0432-44a8-a589-8d57265e1797)
+여기서 레이블을 설정할 때 주의할 점은 CD 스크립트의 self-hosted에 작성했던 레이블을 동일하게 입력해야 합니다. 
+
+./run.sh 명령을 입력하면 아래와 같이 Listen 상태가 되며,
+CD 스크립트의 deploy 파트와 통신하여 작업이 진행됩니다.
+
+백그라운드 실행을 위해 아래와 같은 명령어로 구동합니다.
+```bash
+nohup ./run.sh > run.log 2>&1 &
+```
+
+### ➡️ docker-compose.yml
+팀프로젝트 하위에 vue-frontend 디렉토리에서 작업합니다.
+```bash
+version: "3.7"
+services:
+  nginx:
+    image: "nginx:latest"
+    container_name: frontend-deploy-nginx
+    restart: unless-stopped
+    volumes:
+      - /home/ec2-user/att/vue-frontend/conf:/etc/nginx/conf.d
+      - /home/ec2-user/att/vue-frontend/html:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
+```
+### ➡️ nginx.conf
+```bash
+server {
+        listen 80;
+        location / {
+                root /usr/share/nginx/html;
+                index index.html index.htm;
+                try_files $uri $uri/ /index.html;
+        }
+}
+```
+nginx를 사용하는 이유는 적은 메모리 사용량으로도 높은 성능을 제공하며,  리버스 프록시 사용이 가능하기 때문입니다.
+
+
+docker를 구동하여 IP에 접속하면 아래와 같이 웹 사이트 화면을 볼 수 있습니다.
+```bash
+docker-compose up
+```
+![image](https://github.com/user-attachments/assets/86f9e151-60be-43a9-acee-a03ccf960e61)
 
 ## Backend (Server)
 ### Django CI
