@@ -880,13 +880,25 @@ FLUSH PRIVILEGES;
 <br><br><br>
 
 # 12. 테스트 보고서 (CI 테스트 결과)
-🧪 **Backend Build Test**  
-<img width="976" alt="Backend-Build-Test" src="https://github.com/user-attachments/assets/b7ad4ba0-f070-477a-b1f6-39460f94837c">  
-<br>
-🧪 **Frontend Build Test**  
-<img width="993" alt="Frontend-Build-Test" src="https://github.com/user-attachments/assets/449cff0e-1953-4a93-aa0f-3ea8e07291d9">  
-<br>  
-🆗 _Backend_ 와 _Frontend_ 모두 성공적으로 **Build** 되는 것을 확인할 수 있습니다.
+1. **테스트 환경**  
+  * Jest
+
+2. **유닛 테스트**  
+  * Mocking test
+  * 게시판에 게시글이 예상대로 등록되는지 확인
+
+3. **커버리지 테스트**  
+   * 커버리지 테스트를 통하여 코드 품질을 모니터링하고 개선할 수 있음  
+   * 테스트 결과, 코드베이스에서 약 87퍼센트 실행됨을 알 수 있음  
+  ![Coverage1](https://github.com/user-attachments/assets/e3d13016-8efc-4681-8264-f4cc047f0c3a)  
+4. **테스트 스크린샷**  
+  * 🧪 **Backend Build Test**  
+    <img width="976" alt="Backend-Build-Test" src="https://github.com/user-attachments/assets/b7ad4ba0-f070-477a-b1f6-39460f94837c">  
+  * 🧪 **Frontend Build Test**  
+    <img width="993" alt="Frontend-Build-Test" src="https://github.com/user-attachments/assets/449cff0e-1953-4a93-aa0f-3ea8e07291d9">   
+  
+5. **결 론**
+  * 🆗 _Backend_ 와 _Frontend_ 모두 성공적으로 **Build** 되는 것을 확인할 수 있습니다.
 
 # 13. Deploy Issue (배포 이슈)
 1. **Error: repository name must be lowercase**
