@@ -157,8 +157,7 @@ docker-compose up -d
 ```
 ![image](https://github.com/user-attachments/assets/8b7d9020-68a1-4df0-8218-71573666a2af)
 
-잘 실행되면 아래와 같은 화면을 확인할 수 있습니다.
-![image](https://github.com/user-attachments/assets/25c2116f-af0b-4fff-a429-3c78c2b31138)
+
 
 ## Backend (Server)
 ### Local
@@ -595,6 +594,11 @@ networks:
     driver: bridge
 ```
 ### ➡️ nginx.conf
+nginx를 사용하는 이유는  
+
+리버스 프록시를 사용하여 본래 서버의 IP 주소를 노출시키지 않아 서버 보안에 유용하기 때문입니다.
+
+
 ```bash
 server {
         listen 80;
@@ -605,14 +609,13 @@ server {
         }
 }
 ```
-nginx를 사용하는 이유는 적은 메모리 사용량으로도 높은 성능을 제공하며,  리버스 프록시 사용이 가능하기 때문입니다.
 
 
-docker를 구동하여 IP에 접속하면 아래와 같이 웹 사이트 화면을 볼 수 있습니다.
+docker 컨테이너를 구동합니다.
 ```bash
 docker-compose up
 ```
-![image](https://github.com/user-attachments/assets/86f9e151-60be-43a9-acee-a03ccf960e61)
+
 
 ## Backend (Server)
 ![image](https://github.com/user-attachments/assets/88077b76-db66-4169-b451-0d0cf849a637)
