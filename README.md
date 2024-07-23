@@ -204,6 +204,8 @@ docker-compose up
 # 9. Autonomous Deploy (자동 배포 진행 절차)
 
 ## Frontend (UI)
+![image](https://github.com/user-attachments/assets/ca3d7962-bb4a-4668-9ce8-9976ef04b924)
+
 ### ✅ CI / CD 전체 흐름
 1. 개발자들이 각 Domain에 맞춰 Backlog 작업을 진행합니다.
 
@@ -493,6 +495,8 @@ docker-compose up
 ![image](https://github.com/user-attachments/assets/86f9e151-60be-43a9-acee-a03ccf960e61)
 
 ## Backend (Server)
+![image](https://github.com/user-attachments/assets/88077b76-db66-4169-b451-0d0cf849a637)
+
 ### Django CI
 #### Basic Settings
 GitHub Actions를 활용해서 CI를 구성합니다. 브랜치의 경우, develop 브랜치가 아닌, main 브랜치에서 작업을 수행합니다.  
@@ -736,7 +740,7 @@ FLUSH PRIVILEGES;
 <img src="https://img.shields.io/badge/axios-%235A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
 
 ### Backend
-<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> 
+![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 <img src="https://img.shields.io/badge/pandas-%23150458?style=for-the-badge&logo=pandas&logoColor=white"/> 
 <img src="https://img.shields.io/badge/numpy-%23013243?style=for-the-badge&logo=numpy&logoColor=white"/>
 <img src="https://img.shields.io/badge/Openpyxl-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white"/>
