@@ -161,6 +161,126 @@ docker-compose up -d
 ![image](https://github.com/user-attachments/assets/25c2116f-af0b-4fff-a429-3c78c2b31138)
 
 ## Backend (Server)
+### Local
+1. 먼저 프로젝트 저장소로 이동합니다.  
+![image](https://github.com/user-attachments/assets/de94c3cf-82ff-4cac-8816-401efa605028)
+  
+2. 아래 파일들에 대해서 권한 설정을 해줍니다.
+  
+```bash
+chmod +x wait-for-it.sh
+chmod +x manage.py
+```
+
+3. GHCR에 로그인합니다.
+  
+```bash
+echo "GHCR Token" | docker login ghcr.io -u (username) --password-stdin
+```
+  
+4. wait-for-it.sh를 LF로 바꿔놓아야 합니다. 
+![image](https://github.com/user-attachments/assets/d08ef835-df6f-4e26-9a40-441904b6205b)
+  
+5. 아래 명렁어를 이용하여 Docker 빌드를 진행합니다.
+  
+```bash
+docker buildx create --use
+docker buildx build --platform linux/arm64 -f Dockerfile -t ghcr.io/(username)/(teamname)-django-test-server:latest --push .
+```
+  
+### AWS
+1. pem key를 사용해 AWS에 접속하고 docker-compose.yml를 아래와 같이 구성합니다.
+  
+```yaml
+version: '3'
+services:
+  django:
+    container_name: django
+      # image: ghcr.io/${GITHUB_ACTOR}/(teamname)-django-server:latest
+    image: ghcr.io/${GITHUB_ACTOR}/django-test-server:latest
+    command: /app/wait-for-it.sh db:3306 -t 15 -- sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    ports:
+      - "8000:8000"
+        #    volumes:
+        #      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - KAKAO_LOGIN_URL=${KAKAO_LOGIN_URL}
+      - KAKAO_CLIENT_ID=${KAKAO_CLIENT_ID}
+      - KAKAO_REDIRECT_URI=${KAKAO_REDIRECT_URI}
+      - KAKAO_TOKEN_REQUEST_URI=${KAKAO_TOKEN_REQUEST_URI}
+      - KAKAO_USERINFO_REQUEST_URI=${KAKAO_USERINFO_REQUEST_URI}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+        #      - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+        #      - ./mysql/logs:/var/log/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+  redis_data:
+  app:
+
+networks:
+  app-network:
+    driver: bridge
+```  
+  
+2. 이후 아래 명령어를 입력하여 docker image를 pull 합니다.
+  
+```bash
+echo "GHCR Token" | docker login ghcr.io -u (username) --password-stdin
+```
+  
+3. 이후 아래 명령어를 입력하여 백그라운드에서 작동시킵니다.
+  
+```bash
+docker-compose up -d
+```
+  
 ## FastAPI (AI Core Server)
 ### Build
 프로젝트 최상단에 Dockerfile과 docker-compose.yml 파일을 구성합니다.
@@ -702,13 +822,7 @@ GRANT ALL PRIVILEGES ON <db 이름>.* TO 'eddi'@'%';
 FLUSH PRIVILEGES;
 ```
 `Git Bash`에서 `docker-compose up`명령어를 통해 동작하는지 확인합니다. 잘 동작한다면, docker-compose 구성이 잘 마무리 되었습니다.
-
-## FastAPI (AI Core Server)
-
-<br><br><br>
-
-
-
+<br>  
 # 10. Result (수행 결과)
 
 
