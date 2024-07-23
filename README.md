@@ -824,10 +824,56 @@ FLUSH PRIVILEGES;
 `Git Bash`에서 `docker-compose up`명령어를 통해 동작하는지 확인합니다. 잘 동작한다면, docker-compose 구성이 잘 마무리 되었습니다.
 <br>  
 # 10. Result (수행 결과)
+## ➡️ 구매 동향 분석
+<div align=center>
+  <img src="https://github.com/user-attachments/assets/60915955-b8ac-4993-9922-4e9bf03111b4"width="800px">
+  <div align=center><b>Boxplot</b></div>
+</div>
 
+<br></br>
 
+<div align=center>
+  <img src="https://github.com/user-attachments/assets/95778f68-2cc9-4917-84d9-c1ae338caa30"width="800px">
+  <div align=center><b>Correlation Matrix</b></div>
+</div>
 
-<br><br><br>
+<br></br>
+
+<div align=center>
+  <img src="https://github.com/heowooyoung/SKN01-2nd-1Team/assets/120430842/e5a2acc0-fa21-4b5c-b000-ed942e4953ac"width="800px">
+  <div align=center><b>Kmeans Clustering</b></div>
+</div>
+
+## ➡️ 고객 이탈 분석
+<div align=center>
+  <img src="https://github.com/user-attachments/assets/7055d4ed-1686-481f-97cc-14b722da7fee"width="800px">
+  <div align=center><b>Boxplot</b></div>
+</div>
+
+<br></br>
+
+<div align=center>
+  <img src="https://github.com/user-attachments/assets/c8539f9b-ec95-4c7b-9752-8161d51f7264"width="800px">
+  <div align=center><b>Correlation Matrix</b></div>
+</div>
+
+<br></br>
+
+<div align=center>
+  <img src="https://github.com/user-attachments/assets/aaec43de-9f42-449f-9b0e-22ade5b9793b"width="800px">
+  <div align=center><b>Visualization of Linear Regression Model</b></div>
+</div>
+
+## ➡️ 메인 페이지
+![image](https://github.com/user-attachments/assets/f5205bf1-d3f9-47e2-bba7-39c8b410a9ce)
+## ➡️ 로그인 페이지
+![image](https://github.com/user-attachments/assets/2c936ffa-9c7c-426d-941c-8944414080b5)
+## ➡️ 상품 페이지
+![image](https://github.com/user-attachments/assets/1954fa10-7505-43c8-a684-fd1b6445d056)
+![image](https://github.com/user-attachments/assets/b90ac007-c847-489b-950d-b2c0339c72bb)
+![image](https://github.com/user-attachments/assets/300b2bd7-9bde-4bfc-bf1e-305f49f4bdf1)
+## ➡️ 장바구니 및 주문 페이지
+![image](https://github.com/user-attachments/assets/39239232-06ca-417d-b79e-1fe4e0742ed6)
 
 # 11. Tech Stack (기술 스택)
 
