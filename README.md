@@ -175,8 +175,11 @@ docker-compose up
 # 9. Autonomous Deploy (자동 배포 진행 절차)
 
 ## Frontend (UI)
+![image](https://github.com/user-attachments/assets/ca3d7962-bb4a-4668-9ce8-9976ef04b924)
 
 ## Backend (Server)
+![image](https://github.com/user-attachments/assets/88077b76-db66-4169-b451-0d0cf849a637)
+
 ### Django CI
 #### Basic Settings
 GitHub Actions를 활용해서 CI를 구성합니다. 브랜치의 경우, develop 브랜치가 아닌, main 브랜치에서 작업을 수행합니다.  
